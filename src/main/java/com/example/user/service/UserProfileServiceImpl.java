@@ -1,10 +1,14 @@
 package com.example.user.service;
 
 import com.example.user.dto.userProfile.UserProfileRequestDto;
+import com.example.user.dto.userProfile.UserProfileUpdateRequestDto;
 import com.example.user.model.User;
 import com.example.user.model.UserProfile;
 import com.example.user.repository.UserProfileRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserProfileServiceImpl implements UserProfileService   {
@@ -31,6 +35,31 @@ public class UserProfileServiceImpl implements UserProfileService   {
     public UserProfile saveUserProfile(UserProfile userProfile) {
         UserProfile userP = userProfileRepository.save(userProfile);
         return userP;
+    }
+
+    @Override
+    public List<UserProfile> getAllUserProfile() {
+        List<UserProfile> userProfiles = userProfileRepository.findAll();
+        return userProfiles;
+    }
+
+    @Override
+    public UserProfile getOneUserProfile(Long userProfileId) {
+        UserProfile userProfile = userProfileRepository.findById(userProfileId).orElseThrow(
+                NoSuchElementException::new
+        );
+        return userProfile;
+    }
+
+    @Override
+    public UserProfile updateUserProfile(Long userProfileId, UserProfileUpdateRequestDto dto) {
+        UserProfile userProfile = getOneUserProfile(userProfileId);
+        userProfile.setFirstName(dto.getFirstName());
+        userProfile.setLastName(dto.getLastName());
+        userProfile.setGender(dto.getGender());
+        userProfile.setBirthDay(dto.getBirthDay());
+
+        return saveUserProfile(userProfile);
     }
 
 }
