@@ -1,8 +1,8 @@
 package com.example.user.service;
 
 
-import com.example.user.dto.UserRequestDto;
-import com.example.user.dto.UserUpdateRequestDto;
+import com.example.user.dto.user.UserRequestDto;
+import com.example.user.dto.user.UserUpdateRequestDto;
 import com.example.user.model.User;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +19,5 @@ public interface UserService {
 
     User getOneUser(Long userId);
 
-    User updateUser(User user, UserUpdateRequestDto dto);
+  //  User updateUser(User user, UserUpdateRequestDto dto);
 }

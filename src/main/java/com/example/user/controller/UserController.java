@@ -1,10 +1,8 @@
 package com.example.user.controller;
 
 
-import com.example.user.dto.UserNewResponseDto;
-import com.example.user.dto.UserRequestDto;
-import com.example.user.dto.UserResponseDto;
-import com.example.user.dto.UserUpdateRequestDto;
+import com.example.user.dto.user.UserRequestDto;
+import com.example.user.dto.user.UserResponseDto;
 import com.example.user.mapper.UserMapper;
 import com.example.user.model.User;
 import com.example.user.service.UserService;
@@ -25,10 +23,10 @@ public class UserController {
     }
 
     @PostMapping
-    public UserNewResponseDto newUser(@Valid @RequestBody UserRequestDto dto) throws NoSuchAlgorithmException {
+    public UserResponseDto newUser(@Valid @RequestBody UserRequestDto dto) throws NoSuchAlgorithmException {
         User user = userService.createNewUser(dto);
         user = userService.saveUser(user);
-        return UserMapper.doNewUserResponseDto(user);
+        return UserMapper.doUserResponseDto(user);
     }
 
     @GetMapping
@@ -44,7 +42,7 @@ public class UserController {
         return UserMapper.doUserResponseDto(user);
     }
 
-    @PutMapping("/{userId}")
+/*    @PutMapping("/{userId}")
     public UserResponseDto updateUser(@PathVariable Long userId,
                                       @Valid @RequestBody UserUpdateRequestDto dto){
 
@@ -52,6 +50,6 @@ public class UserController {
         user = userService.updateUser(user, dto);
 
         return UserMapper.doUserResponseDto(user);
-    }
+    }*/
 
 }

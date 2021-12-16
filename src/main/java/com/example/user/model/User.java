@@ -4,15 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import java.util.Set;
+
 
 @Getter
 @Setter
@@ -34,48 +30,11 @@ public class User {
     @Size(min = 8, max = 80)
     private String password;
 
-    @Column
-    @NotBlank
-    @Size(min = 2)
-    private String lastName;
+    @OneToOne
+    private UserProfile userProfile;
 
-    @Column(name = "first_name")
-    @NotBlank
-    @Size(min = 2)
-    private String firstName;
-
-    @Column(name = "birth_day")
-    private LocalDate birthDay;
-
-    @Column
-    @Enumerated(value = EnumType.STRING)
-    private Gender gender;
-
-    @Column
-    private String country;
-
-    @Column
-    private String region;
-
-    @Column
-    private String city;
-
-    @Column
-    private String street;
-
-    @Column
-    private Integer house;
-
-
-
-    public void setBirthDay(LocalDate birthDay) {
-        long ear = ChronoUnit.YEARS.between(birthDay, LocalDate.now());
-
-        if (ear < 18) {
-            this.birthDay = null;
-        }
-        this.birthDay = birthDay;
-    }
+    @OneToMany
+    private Set<UserAddress> userAddressSet;
 
 
 }
