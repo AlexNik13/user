@@ -1,10 +1,13 @@
 package com.example.user.controller;
 
 
+import com.example.user.dto.UserAllInfoResponseDto;
 import com.example.user.dto.user.UserRequestDto;
 import com.example.user.dto.user.UserResponseDto;
 import com.example.user.mapper.UserMapper;
 import com.example.user.model.User;
+import com.example.user.service.UserAddressService;
+import com.example.user.service.UserProfileService;
 import com.example.user.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,5 +54,13 @@ public class UserController {
 
         return UserMapper.doUserResponseDto(user);
     }*/
+
+    @GetMapping("/allinfo/{userId}")
+    public UserAllInfoResponseDto allInfoUser(@PathVariable Long userId){
+        User user = userService.getOneUser(userId);
+
+        UserAllInfoResponseDto dto = UserAllInfoResponseDto.doUserAllInfoResponseDto(user);
+        return dto;
+    }
 
 }

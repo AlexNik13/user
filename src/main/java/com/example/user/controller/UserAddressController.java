@@ -55,7 +55,6 @@ public class UserAddressController {
                                                     @RequestParam(value = "userId") Long userId,
                                                     @Valid @RequestBody UserAddressRequestDto dto){
         User user = userService.getOneUser(userId);
-
         Set<UserAddress> addresses = user.getUserAddressSet();
         UserAddress userAddress;
         for (UserAddress address : addresses) {
@@ -67,5 +66,4 @@ public class UserAddressController {
         }
         return null;
     }
-
 }
