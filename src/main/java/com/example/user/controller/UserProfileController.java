@@ -26,7 +26,7 @@ public class UserProfileController {
         this.userService = userService;
     }
 
-
+    //TODO divide method
     @PostMapping()
     public UserProfileResponseDto addProfile(@RequestParam (value = "UserId")Long UserId,
             @Valid @RequestBody UserProfileRequestDto dto){
