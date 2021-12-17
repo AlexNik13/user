@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Service
 public class UserProfileServiceImpl implements UserProfileService   {
@@ -43,17 +44,18 @@ public class UserProfileServiceImpl implements UserProfileService   {
         return userProfiles;
     }
 
+
+
     @Override
-    public UserProfile getOneUserProfile(Long userProfileId) {
-        UserProfile userProfile = userProfileRepository.findById(userProfileId).orElseThrow(
-                NoSuchElementException::new
-        );
+    public UserProfile getUserProfilesFromUser(User user) {
+        UserProfile userProfile = userProfileRepository.findByUser(user);
         return userProfile;
     }
 
     @Override
-    public UserProfile updateUserProfile(Long userProfileId, UserProfileUpdateRequestDto dto) {
-        UserProfile userProfile = getOneUserProfile(userProfileId);
+    public UserProfile updateUserProfile(User user , UserProfileUpdateRequestDto dto) {
+
+        UserProfile userProfile = getUserProfilesFromUser(user);
         userProfile.setFirstName(dto.getFirstName());
         userProfile.setLastName(dto.getLastName());
         userProfile.setGender(dto.getGender());
@@ -61,5 +63,7 @@ public class UserProfileServiceImpl implements UserProfileService   {
 
         return saveUserProfile(userProfile);
     }
+
+
 
 }

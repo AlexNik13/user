@@ -15,6 +15,7 @@ public class UserAddressMapper {
         dto.setRegion(userAddress.getRegion());
         dto.setStreet(userAddress.getStreet());
         dto.setHouse(userAddress.getHouse());
+        dto.setUserId(userAddress.getUser().getId());
         return dto;
     }
 

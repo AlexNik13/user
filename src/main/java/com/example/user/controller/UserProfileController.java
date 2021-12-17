@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user_profile")
+@RequestMapping()
 public class UserProfileController {
 
     private final UserProfileService userProfileService;
@@ -26,40 +26,38 @@ public class UserProfileController {
         this.userService = userService;
     }
 
-    //TODO divide method
-    @PostMapping()
-    public UserProfileResponseDto addProfile(@RequestParam (value = "UserId")Long UserId,
+    @PostMapping("/users/{userId}/profiles")
+    public UserProfileResponseDto addProfile(@PathVariable (value = "userId") Long userId,
             @Valid @RequestBody UserProfileRequestDto dto){
-        User user = userService.getOneUser(UserId);
-
+        User user = userService.getOneUser(userId);
         UserProfile userProfile = userProfileService.createUserProfile(user, dto);
-        userService.saveUser(user);
-        user.setUserProfile(userProfile);
-
         userProfile = userProfileService.saveUserProfile(userProfile);
-
         UserProfileResponseDto userProfileResponseDto = UserProfileMapper.doUserProfileResponseDto(userProfile);
-
         return userProfileResponseDto;
     }
 
-    @GetMapping
+    @GetMapping("/profiles")
     public List<UserProfileResponseDto> getAllUserProfile(){
         List<UserProfile> userProfiles = userProfileService.getAllUserProfile();
         List<UserProfileResponseDto> dtos = UserProfileMapper.doAllUserProfileResponseDto(userProfiles);
         return dtos;
     }
 
-    @GetMapping("/{userProfileId}")
-    public UserProfileResponseDto getOneUserProfile(@PathVariable Long userProfileId){
-        UserProfile userProfile = userProfileService.getOneUserProfile(userProfileId);
-        return UserProfileMapper.doUserProfileResponseDto(userProfile);
+
+    @GetMapping("/users/{userId}/profiles")
+    public UserProfileResponseDto getUserProfilesFromUser(@PathVariable Long userId){
+        User user = userService.getOneUser(userId);
+        UserProfile userProfileSet = userProfileService.getUserProfilesFromUser(user);
+
+        return  UserProfileMapper.doUserProfileResponseDto(userProfileSet);
     }
 
-    @PutMapping("/{userProfileId}")
-    public UserProfileResponseDto updateUserProfile(@PathVariable Long userProfileId,
+    @PutMapping("/users/{userId}/profiles")
+    public UserProfileResponseDto updateUserProfile(@PathVariable Long userId,
                                                     @RequestBody UserProfileUpdateRequestDto dto){
-        UserProfile userProfile = userProfileService.updateUserProfile(userProfileId, dto);
+
+        User user = userService.getOneUser(userId);
+        UserProfile userProfile = userProfileService.updateUserProfile(user, dto);
         return UserProfileMapper.doUserProfileResponseDto(userProfile);
     }
 }

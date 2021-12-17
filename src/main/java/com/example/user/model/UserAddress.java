@@ -33,6 +33,10 @@ public class UserAddress {
     @Column
     private Integer house;
 
+    @NotNull
+    @OneToOne
+    private User user;
+
 
 
 }

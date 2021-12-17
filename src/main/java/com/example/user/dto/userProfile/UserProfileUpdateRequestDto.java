@@ -26,6 +26,5 @@ public class UserProfileUpdateRequestDto {
     private LocalDate birthDay;
 
     @NotNull
-    @Enumerated(value = EnumType.STRING)
     private Gender gender;
 }

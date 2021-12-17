@@ -11,7 +11,8 @@ import java.util.List;
 
 @Service
 public interface UserService {
-    User createNewUser(UserRequestDto dto) throws NoSuchAlgorithmException;
+
+    User createNewUser(UserRequestDto dto);
 
     User saveUser(User user);
 
@@ -19,8 +20,4 @@ public interface UserService {
 
     User getOneUser(Long userId);
 
-    User addUserAddress(User user, UserAddress userAddress);
-
-
-    //  User updateUser(User user, UserUpdateRequestDto dto);
 }

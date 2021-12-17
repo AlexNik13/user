@@ -7,6 +7,7 @@ import com.example.user.model.UserProfile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public interface UserProfileService {
@@ -18,7 +19,7 @@ public interface UserProfileService {
 
     List<UserProfile> getAllUserProfile();
 
-    UserProfile getOneUserProfile(Long userProfileId);
+    UserProfile updateUserProfile(User user, UserProfileUpdateRequestDto dto);
 
-    UserProfile updateUserProfile(Long userProfileId, UserProfileUpdateRequestDto dto);
+    UserProfile getUserProfilesFromUser(User user);
 }

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/user_address")
+@RequestMapping()
 public class UserAddressController {
 
     private final UserAddressService userAddressService;
@@ -26,44 +26,49 @@ public class UserAddressController {
         this.userService = userService;
     }
 
-    @PostMapping
-    public UserAddressResponseDto addUserAddress(@RequestParam (value = "userId") Long userId,
-                                                 @Valid @RequestBody UserAddressRequestDto dto){
+    @PostMapping("/users/{userId}/addresses")
+    public UserAddressResponseDto addUserAddress(@PathVariable Long userId,
+                                                 @Valid @RequestBody UserAddressRequestDto dto) {
         User user = userService.getOneUser(userId);
-        UserAddress userAddress = userAddressService.createUserAddress(dto);
-        user = userService.addUserAddress(user, userAddress);
+        UserAddress userAddress = userAddressService.createUserAddress(user, dto);
         userAddress = userAddressService.saveUserAddress(userAddress);
-        userService.saveUser(user);
         return UserAddressMapper.doUserAddressResponseDto(userAddress);
     }
 
-    @GetMapping
-    public List<UserAddressResponseDto> getAllUserAddress(){
+
+    @GetMapping("/addresses")
+    public List<UserAddressResponseDto> getAllUserAddress() {
         List<UserAddress> userAddresses = userAddressService.getAllUserAddress();
         List<UserAddressResponseDto> dtos = UserAddressMapper.doListUserAddressResponseDto(userAddresses);
         return dtos;
     }
 
-    @GetMapping("/{userAddressId}")
-    public UserAddressResponseDto getOneUserAddress(@PathVariable Long userAddressId){
-        UserAddress userAddress = userAddressService.getOneUserAddress(userAddressId);
+    @GetMapping("/users/{userId}/addres/{addressId}")
+    public UserAddressResponseDto getOneUserAddressFromUser(@PathVariable Long userId,
+                                                            @PathVariable Long addressId) {
+        User user = userService.getOneUser(userId);
+        UserAddress userAddress = userAddressService.getOneUserAddressFromUser(user, addressId);
         return UserAddressMapper.doUserAddressResponseDto(userAddress);
     }
 
-    @PutMapping("/{userAddressId}")
-    public UserAddressResponseDto updateUserAddress(@PathVariable Long userAddressId,
-                                                    @RequestParam(value = "userId") Long userId,
-                                                    @Valid @RequestBody UserAddressRequestDto dto){
+
+    @GetMapping("/users/{userId}/addresses")
+    public List<UserAddressResponseDto> getAllUserAddressFromUser(@PathVariable Long userId) {
         User user = userService.getOneUser(userId);
-        Set<UserAddress> addresses = user.getUserAddressSet();
-        UserAddress userAddress;
-        for (UserAddress address : addresses) {
-            if (address.getId() == userAddressId) {
-                userAddress = userAddressService.updateUserAddress(address, dto);
-                userAddress = userAddressService.saveUserAddress(userAddress);
-                return UserAddressMapper.doUserAddressResponseDto(userAddress);
-            }
-        }
-        return null;
+        List<UserAddress>  userAddresses = userAddressService.getAllUserAddressFromUser(user);
+        return UserAddressMapper.doListUserAddressResponseDto(userAddresses);
+    }
+
+    @PutMapping("/users/{userId}/addresses/{addressId}")
+    public UserAddressResponseDto updateUserAddress(@PathVariable Long userId,
+                                                    @PathVariable Long addressId,
+                                                    @Valid @RequestBody UserAddressRequestDto dto) {
+        User user = userService.getOneUser(userId);
+
+        UserAddress userAddress = userAddressService.getOneUserAddressFromUser(user,addressId );
+        userAddress = userAddressService.updateUserAddress(userAddress, dto);
+        userAddress = userAddressService.saveUserAddress(userAddress);
+
+        return UserAddressMapper.doUserAddressResponseDto(userAddress);
     }
 }

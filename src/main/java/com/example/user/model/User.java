@@ -30,11 +30,4 @@ public class User {
     @Size(min = 8, max = 80)
     private String password;
 
-    @OneToOne
-    private UserProfile userProfile;
-
-    @OneToMany
-    private Set<UserAddress> userAddressSet;
-
-
 }
