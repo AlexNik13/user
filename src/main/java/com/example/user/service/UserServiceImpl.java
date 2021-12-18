@@ -22,12 +22,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserRoleService userRoleService;
-    private final UserRole userRoleUser;
+
 
     public UserServiceImpl(UserRepository userRepository, UserRoleService userRoleService) {
         this.userRepository = userRepository;
         this.userRoleService = userRoleService;
-        this.userRoleUser = userRoleService.getUserRoleUser("User");
+
     }
 
 
@@ -38,20 +38,16 @@ public class UserServiceImpl implements UserService {
         user.setPassword(getPasswordMd5(dto.getPassword()));
         user.setActive(dto.isActive());
         Set<UserRole> userRoles = new HashSet<>();
-
-
         userRoles.addAll(dto.getUserRoles());
-        userRoles.add(userRoleUser);
-
+        userRoles.add(userRoleService.getUserRoleUser("User"));
         user.setUserRoles(userRoles);
-
         return user;
-
     }
 
     @Override
     public User saveUser(User user) {
-        return userRepository.save(user);
+        user = userRepository.save(user);
+        return user;
     }
 
     @Override
@@ -68,6 +64,24 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public User addUserRole(User user, UserRole userRole) {
+        Set<UserRole> userRoles = user.getUserRoles();
+        userRoles.add(userRole);
+        user.setUserRoles(userRoles);
+        return user;
+    }
+
+    @Override
+    public User deleteUserRole(User user, UserRole userRole) {
+        Set<UserRole> userRoles = user.getUserRoles();
+        userRoles.remove(userRole);
+        user.setUserRoles(userRoles);
+        return user;
+    }
+
+
+
     private String getPasswordMd5(String password) {
         try {
             MessageDigest md5 = MessageDigest.getInstance("MD5");
@@ -79,4 +93,5 @@ public class UserServiceImpl implements UserService {
         }
         return "";
     }
+
 }

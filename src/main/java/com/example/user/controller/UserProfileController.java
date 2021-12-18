@@ -54,7 +54,7 @@ public class UserProfileController {
 
     @PutMapping("/users/{userId}/profiles")
     public UserProfileResponseDto updateUserProfile(@PathVariable Long userId,
-                                                    @RequestBody UserProfileUpdateRequestDto dto){
+                                                    @RequestParam UserProfileUpdateRequestDto dto){
 
         User user = userService.getOneUser(userId);
         UserProfile userProfile = userProfileService.updateUserProfile(user, dto);
