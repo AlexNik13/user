@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -37,5 +38,5 @@ public class User {
 
     @Column
     @ManyToMany
-    private Set<UserRole> userRoles;
+    private Set<UserRole> userRoles = new HashSet<>();
 }

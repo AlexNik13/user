@@ -17,4 +17,6 @@ public interface UserRoleService {
     UserRole getOneUserRole(Long userRoleId);
 
     UserRole updateUserRole(UserRole userRole, UserRoleRequestDto dto);
+
+    UserRole getUserRoleUser(String role);
 }

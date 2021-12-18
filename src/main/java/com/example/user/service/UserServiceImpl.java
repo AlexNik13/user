@@ -3,25 +3,31 @@ package com.example.user.service;
 
 import com.example.user.dto.user.UserRequestDto;
 import com.example.user.model.User;
+import com.example.user.model.UserRole;
 import com.example.user.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
 
 
     private final UserRepository userRepository;
+    private final UserRoleService userRoleService;
+    private final UserRole userRoleUser;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserRoleService userRoleService) {
         this.userRepository = userRepository;
+        this.userRoleService = userRoleService;
+        this.userRoleUser = userRoleService.getUserRoleUser("User");
     }
 
 
@@ -30,9 +36,17 @@ public class UserServiceImpl implements UserService {
         User user =  new User();
         user.setEmail(dto.getEmail());
         user.setPassword(getPasswordMd5(dto.getPassword()));
+        user.setActive(dto.isActive());
+        Set<UserRole> userRoles = new HashSet<>();
 
+
+        userRoles.addAll(dto.getUserRoles());
+        userRoles.add(userRoleUser);
+
+        user.setUserRoles(userRoles);
 
         return user;
+
     }
 
     @Override

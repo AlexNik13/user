@@ -5,6 +5,7 @@ import com.example.user.model.UserRole;
 import com.example.user.repository.UserRoleRepository;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -46,6 +47,11 @@ public class UserRoleServiceImpl implements UserRoleService{
     public UserRole updateUserRole(UserRole userRole, UserRoleRequestDto dto) {
         userRole.setRole(dto.getRole());
         return userRole;
+    }
+
+    @Override
+    public UserRole getUserRoleUser(String role) {
+        return userRoleRepository.findByRole(role);
     }
 
 }

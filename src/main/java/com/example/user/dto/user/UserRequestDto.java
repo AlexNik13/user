@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -32,5 +33,5 @@ public class UserRequestDto {
     @NotNull
     private boolean isActive;
 
-    private Set<UserRole> userRoles;
+    private Set<UserRole> userRoles = new HashSet<>();
 }
