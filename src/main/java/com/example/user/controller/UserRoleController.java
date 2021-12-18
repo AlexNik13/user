@@ -1,6 +1,7 @@
 package com.example.user.controller;
 
 import com.example.user.service.UserRoleService;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,4 +15,7 @@ public class UserRoleController {
     public UserRoleController(UserRoleService userRoleService) {
         this.userRoleService = userRoleService;
     }
+
+    @PostMapping
+    public
 }
