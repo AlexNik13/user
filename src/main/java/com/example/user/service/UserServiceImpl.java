@@ -4,6 +4,7 @@ package com.example.user.service;
 import com.example.user.dto.user.UserRequestDto;
 import com.example.user.model.User;
 import com.example.user.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -15,6 +16,7 @@ import java.util.NoSuchElementException;
 
 @Service
 public class UserServiceImpl implements UserService {
+
 
     private final UserRepository userRepository;
 
@@ -28,6 +30,7 @@ public class UserServiceImpl implements UserService {
         User user =  new User();
         user.setEmail(dto.getEmail());
         user.setPassword(getPasswordMd5(dto.getPassword()));
+
 
         return user;
     }

@@ -39,7 +39,7 @@ public class UserProfile {
     private Gender gender;
 
     @NotNull
-    @OneToOne
+    @OneToOne()
     private User user;
 
 
