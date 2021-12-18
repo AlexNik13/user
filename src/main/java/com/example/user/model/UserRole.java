@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Getter
 @Setter
+@Table(name = "users_roles")
 public class UserRole {
 
     @Id

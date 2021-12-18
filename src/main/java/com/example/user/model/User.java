@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
@@ -30,4 +31,11 @@ public class User {
     @Size(min = 8, max = 80)
     private String password;
 
+    @Column
+    @NotNull
+    private boolean isActive;
+
+    @Column
+    @ManyToMany
+    private Set<UserRole> userRoles;
 }
