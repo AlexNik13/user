@@ -7,6 +7,7 @@ import com.example.user.model.UserRole;
 import com.example.user.service.UserRoleService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,14 +22,14 @@ public class UserRoleController {
     }
 
     @PostMapping
-    public UserRoleResponseDto createUserRole(@RequestBody UserRoleRequestDto dto){
+    public UserRoleResponseDto createUserRole(@Valid @RequestBody UserRoleRequestDto dto){
         UserRole userRole = userRoleService.createUserRole(dto);
         userRole = userRoleService.saveUserRole(userRole);
         UserRoleResponseDto responseDto = UserRoleMapper.toUserRoleUserRoleResponseDto(userRole);
         return responseDto;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<UserRoleResponseDto> getAllUserRole(){
         List<UserRole> userRoles = userRoleService.getAllUserRole();
         List<UserRoleResponseDto> dtos = UserRoleMapper.toListUserRoleResponseDto(userRoles);
@@ -40,5 +41,15 @@ public class UserRoleController {
         UserRole userRoles = userRoleService.getOneUserRole(userRoleId);
         UserRoleResponseDto dto = UserRoleMapper.toUserRoleUserRoleResponseDto(userRoles);
         return dto;
+    }
+
+    @PutMapping("/{userRoleId}")
+    public UserRoleResponseDto updateUserRole(@PathVariable Long userRoleId,
+                                              @RequestBody UserRoleRequestDto dto){
+        UserRole userRole = userRoleService.getOneUserRole(userRoleId);
+        userRole = userRoleService.updateUserRole(userRole, dto);
+        userRole = userRoleService.saveUserRole(userRole);
+        UserRoleResponseDto responseDto = UserRoleMapper.toUserRoleUserRoleResponseDto(userRole);
+        return responseDto;
     }
 }

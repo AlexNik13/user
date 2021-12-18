@@ -15,4 +15,6 @@ public interface UserRoleService {
     List<UserRole> getAllUserRole();
 
     UserRole getOneUserRole(Long userRoleId);
+
+    UserRole updateUserRole(UserRole userRole, UserRoleRequestDto dto);
 }

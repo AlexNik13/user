@@ -42,4 +42,10 @@ public class UserRoleServiceImpl implements UserRoleService{
         return userRole;
     }
 
+    @Override
+    public UserRole updateUserRole(UserRole userRole, UserRoleRequestDto dto) {
+        userRole.setRole(dto.getRole());
+        return userRole;
+    }
+
 }

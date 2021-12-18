@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class UserRoleMapper {
     public static UserRoleResponseDto toUserRoleUserRoleResponseDto(UserRole userRole){
         UserRoleResponseDto dto = new UserRoleResponseDto();
-        dto.setId(dto.getId());
+        dto.setId(userRole.getId());
         dto.setRole(userRole.getRole());
         return dto;
     }
